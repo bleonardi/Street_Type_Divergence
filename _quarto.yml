@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - analysis.qmd
+    - ri_results.qmd
+
+website:
+  title: "What's in a Street Name?"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: analysis.qmd
+        text: Four-State Analysis
+      - href: ri_results.qmd
+        text: Rhode Island
+
+format:
+  html:
+    theme: [flatly, assets/custom.scss]
+    toc: true
+    toc-depth: 3
+    linestretch: 1.6
+    code-fold: true
+    highlight-style: github
+    df-print: kable
+    page-layout: article

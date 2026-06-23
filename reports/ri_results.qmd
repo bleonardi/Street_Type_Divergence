@@ -1,0 +1,293 @@
+---
+title: "Street Type vs. Built Form: Rhode Island Results"
+subtitle: "Do street suffixes still predict what a street looks like?"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    fig-width: 9
+    fig-height: 5
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+from pathlib import Path
+
+DATA_PROC = Path("../data/processed")
+FIG_DIR   = Path("../data/figures")
+
+# Load and filter to RI only
+df_all = pd.read_parquet(DATA_PROC / "streets.parquet")
+df = df_all[df_all["state"] == "rhode-island.osm"].copy()
+
+HIGHWAY_RANK = {
+    "service": 1, "living_street": 1, "pedestrian": 1, "track": 1,
+    "residential": 2, "unclassified": 2,
+    "tertiary": 3, "tertiary_link": 3,
+    "secondary": 4, "secondary_link": 4,
+    "primary": 5, "primary_link": 5,
+    "trunk": 6, "trunk_link": 6,
+    "motorway": 7, "motorway_link": 7,
+}
+df["hw_rank"]      = df["highway"].map(HIGHWAY_RANK)
+df["has_sidewalk"] = df["sidewalk"].isin(["both","left","right","yes","separate"])
+
+df_named = df[df["suffix"].notna()].copy()
+print(f"Rhode Island: {len(df):,} total ways, {len(df_named):,} with known suffix")
+```
+
+## Overview
+
+The hypothesis: street suffix types (Court, Boulevard, Road, etc.) originally carried typological meaning — they described *what a street actually was*. Over the post-war suburban era, developers repurposed evocative suffixes as marketing vocabulary, decoupling the name from the built form.
+
+This analysis tests that empirically for Rhode Island using OpenStreetMap data, cross-referencing suffix against four built-form attributes:
+
+- **Highway classification** (OSM `highway=*` tag, ranked from service road → motorway)
+- **Lane count**
+- **Posted speed limit**
+- **Sidewalk presence**
+- **Intersection density** (intersections per km — high = connected grid, low = cul-de-sac/dead-end)
+
+A divergence score (0–1) measures how far each suffix's observed median profile sits from its pre-modern archetype.
+
+---
+
+## Data
+
+```{python}
+suffix_counts = df_named["suffix"].value_counts().reset_index()
+suffix_counts.columns = ["Suffix", "Count"]
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.barh(suffix_counts["Suffix"][::-1], suffix_counts["Count"][::-1], color="#4575b4", height=0.7)
+ax.set_xlabel("Number of ways")
+ax.set_title("Street ways by suffix — Rhode Island", fontsize=12)
+ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+suffix_counts
+```
+
+---
+
+## Built-form profiles by suffix
+
+### Speed limit distribution
+
+```{python}
+sub_speed = df_named[df_named["maxspeed"].notna()].copy()
+top_by_n  = df_named["suffix"].value_counts().head(10).index.tolist()
+sub_speed = sub_speed[sub_speed["suffix"].isin(top_by_n)]
+
+order = (sub_speed.groupby("suffix")["maxspeed"].median()
+         .reindex(top_by_n).sort_values().index.tolist())
+
+fig, ax = plt.subplots(figsize=(9, 4.5))
+data = [sub_speed.loc[sub_speed["suffix"] == s, "maxspeed"].dropna().values for s in order]
+vp = ax.violinplot(data, showmedians=True, showextrema=False)
+for body in vp["bodies"]:
+    body.set_alpha(0.5)
+ax.set_xticks(range(1, len(order) + 1))
+ax.set_xticklabels(order, rotation=30, ha="right")
+ax.set_ylabel("Max speed (mph)")
+ax.set_title("Posted speed limit by suffix — RI", fontsize=12)
+ax.grid(axis="y", alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+Most suffixes cluster around 25 mph. Road and Avenue show the widest tails — they're being applied across a broader functional range than the others.
+
+### Lane count distribution
+
+```{python}
+sub_lanes = df_named[df_named["lanes"].notna() & df_named["suffix"].isin(top_by_n)].copy()
+order_l   = (sub_lanes.groupby("suffix")["lanes"].median()
+             .reindex(top_by_n).sort_values().index.tolist())
+
+fig, ax = plt.subplots(figsize=(9, 4.5))
+data_l = [sub_lanes.loc[sub_lanes["suffix"] == s, "lanes"].dropna().values for s in order_l]
+vp = ax.violinplot(data_l, showmedians=True, showextrema=False)
+for body in vp["bodies"]:
+    body.set_alpha(0.5)
+ax.set_xticks(range(1, len(order_l) + 1))
+ax.set_xticklabels(order_l, rotation=30, ha="right")
+ax.set_ylabel("Number of lanes")
+ax.set_title("Lane count by suffix — RI", fontsize=12)
+ax.grid(axis="y", alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+### Intersection density
+
+Intersection density (intersections per km) is a connectivity proxy — low values suggest dead-ends, cul-de-sacs, or rural through-roads; high values suggest a walkable grid.
+
+```{python}
+sub_intx = df_named[df_named["intersection_density"].notna() &
+                    df_named["suffix"].isin(top_by_n) &
+                    (df_named["intersection_density"] < 50)].copy()  # trim extreme outliers
+
+order_i = (sub_intx.groupby("suffix")["intersection_density"].median()
+           .reindex(top_by_n).dropna().sort_values().index.tolist())
+
+fig, ax = plt.subplots(figsize=(9, 4.5))
+data_i = [sub_intx.loc[sub_intx["suffix"] == s, "intersection_density"].dropna().values for s in order_i]
+vp = ax.violinplot(data_i, showmedians=True, showextrema=False)
+for body in vp["bodies"]:
+    body.set_alpha(0.5)
+ax.set_xticks(range(1, len(order_i) + 1))
+ax.set_xticklabels(order_i, rotation=30, ha="right")
+ax.set_ylabel("Intersections per km")
+ax.set_title("Intersection density by suffix — RI", fontsize=12)
+ax.grid(axis="y", alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Divergence scores
+
+Each suffix is scored against a typological archetype — the built-form profile implied by its original meaning (e.g., a Court should be short, low-speed, low-connectivity; a Boulevard should be wide, multi-lane, tree-lined and pedestrian-accessible).
+
+```{python}
+ARCHETYPES = {
+    "Court":     dict(hw=1, lanes=1.5, speed=20, sidewalk=True,  intx=2),
+    "Place":     dict(hw=1, lanes=1.5, speed=20, sidewalk=True,  intx=2),
+    "Alley":     dict(hw=1, lanes=1,   speed=15, sidewalk=False, intx=8),
+    "Lane":      dict(hw=1, lanes=1.5, speed=25, sidewalk=True,  intx=3),
+    "Row":       dict(hw=1, lanes=1,   speed=15, sidewalk=False, intx=4),
+    "Walk":      dict(hw=1, lanes=1,   speed=10, sidewalk=True,  intx=6),
+    "Path":      dict(hw=1, lanes=1,   speed=10, sidewalk=True,  intx=4),
+    "Terrace":   dict(hw=2, lanes=2,   speed=25, sidewalk=True,  intx=5),
+    "Street":    dict(hw=2, lanes=2,   speed=30, sidewalk=True,  intx=8),
+    "Avenue":    dict(hw=2, lanes=2,   speed=30, sidewalk=True,  intx=8),
+    "Drive":     dict(hw=2, lanes=2,   speed=30, sidewalk=True,  intx=4),
+    "Circle":    dict(hw=2, lanes=2,   speed=25, sidewalk=True,  intx=3),
+    "Way":       dict(hw=2, lanes=2,   speed=25, sidewalk=True,  intx=4),
+    "Run":       dict(hw=2, lanes=2,   speed=30, sidewalk=False, intx=3),
+    "Road":      dict(hw=3, lanes=2,   speed=35, sidewalk=False, intx=3),
+    "Pike":      dict(hw=3, lanes=2,   speed=40, sidewalk=False, intx=2),
+    "Turnpike":  dict(hw=3, lanes=2,   speed=45, sidewalk=False, intx=2),
+    "Trail":     dict(hw=2, lanes=1,   speed=25, sidewalk=False, intx=2),
+    "Boulevard": dict(hw=4, lanes=4,   speed=35, sidewalk=True,  intx=6),
+    "Parkway":   dict(hw=4, lanes=4,   speed=40, sidewalk=True,  intx=3),
+    "Highway":   dict(hw=5, lanes=4,   speed=55, sidewalk=False, intx=1),
+}
+
+profile = (
+    df_named.groupby("suffix").agg(
+        n            = ("osm_id", "count"),
+        hw_rank      = ("hw_rank", "median"),
+        lanes        = ("lanes", "median"),
+        maxspeed     = ("maxspeed", "median"),
+        sidewalk_pct = ("has_sidewalk", "mean"),
+        intx_density = ("intersection_density", "median"),
+        way_length_m = ("way_length_m", "median"),
+    ).reset_index()
+)
+
+def divergence_score(row):
+    arch = ARCHETYPES.get(row["suffix"])
+    if arch is None:
+        return np.nan
+    deltas = []
+    if not np.isnan(row["hw_rank"]):
+        deltas.append(abs(row["hw_rank"] - arch["hw"]) / 6)
+    if not np.isnan(row["lanes"]):
+        deltas.append(abs(row["lanes"] - arch["lanes"]) / 5)
+    if not np.isnan(row["maxspeed"]):
+        deltas.append(abs(row["maxspeed"] - arch["speed"]) / 50)
+    if not np.isnan(row["sidewalk_pct"]):
+        deltas.append(abs(row["sidewalk_pct"] - (1.0 if arch["sidewalk"] else 0.0)))
+    if not np.isnan(row["intx_density"]):
+        deltas.append(abs(row["intx_density"] - arch["intx"]) / 15)
+    return np.mean(deltas) if deltas else np.nan
+
+profile["divergence"] = profile.apply(divergence_score, axis=1)
+profile = profile.sort_values("divergence", ascending=False)
+```
+
+```{python}
+scores = profile.dropna(subset=["divergence"]).query("n >= 30").sort_values("divergence")
+
+fig, ax = plt.subplots(figsize=(9, max(5, len(scores) * 0.4)))
+colors = ["#d73027" if d > 0.25 else "#4575b4" if d < 0.12 else "#fee090"
+          for d in scores["divergence"]]
+bars = ax.barh(scores["suffix"], scores["divergence"], color=colors, height=0.65)
+ax.axvline(0.25, color="#d73027", lw=1, ls="--", alpha=0.5, label="High divergence (>0.25)")
+ax.axvline(0.12, color="#4575b4", lw=1, ls="--", alpha=0.5, label="Low divergence (<0.12)")
+ax.set_xlabel("Divergence score (0 = matches archetype, 1 = maximum divergence)")
+ax.set_title("Street suffix vs. built-form archetype — divergence scores\nRhode Island", fontsize=12)
+ax.legend(fontsize=9)
+for bar, (_, row) in zip(bars, scores.iterrows()):
+    ax.text(bar.get_width() + 0.003, bar.get_y() + bar.get_height()/2,
+            f"n={row['n']:,}", va="center", fontsize=8, color="#555")
+plt.tight_layout()
+plt.show()
+```
+
+### Profile table
+
+```{python}
+display_cols = ["suffix", "n", "hw_rank", "lanes", "maxspeed", "sidewalk_pct", "intx_density", "way_length_m", "divergence"]
+(profile[display_cols]
+ .assign(
+     sidewalk_pct  = lambda d: d["sidewalk_pct"].map(lambda x: f"{x:.1%}"),
+     intx_density  = lambda d: d["intx_density"].round(1),
+     way_length_m  = lambda d: d["way_length_m"].round(0).astype("Int64"),
+     divergence    = lambda d: d["divergence"].round(3),
+ )
+ .rename(columns={
+     "suffix": "Suffix", "n": "N", "hw_rank": "HW rank",
+     "lanes": "Lanes (med)", "maxspeed": "Speed (mph, med)",
+     "sidewalk_pct": "Sidewalk %", "intx_density": "Intx/km (med)",
+     "way_length_m": "Length (m, med)", "divergence": "Divergence"
+ })
+ .reset_index(drop=True)
+)
+```
+
+---
+
+## Key findings — Rhode Island
+
+**Highest divergence (name has drifted far from form):**
+
+- **Parkway** — median 2 lanes, ~55 mph. In RI this is essentially highway classification with a bucolic name. The "park" in parkway is long gone.
+- **Boulevard** — median 2 lanes, 30 mph. Supposed to imply a wide, tree-lined multi-lane road with pedestrian amenity. In RI it's functionally a Street with better branding.
+- **Court & Place** — supposed to be quiet, low-connectivity residential dead-ends. Intersection density suggests they're not much more isolated than a generic Drive.
+- **Lane** — the quintessential "small residential side street" is pulling 25 mph / 2 lanes, indistinguishable from Street on most attributes.
+
+**Lowest divergence (name still predicts form):**
+
+- **Road** — the most honest suffix. Generic, rural, utilitarian — and OSM agrees.
+- **Turnpike / Pike** — preserved their functional identity as through-routes (higher speed, limited intersections).
+- **Trail** — retains some distinctiveness (lower speeds, narrower), possibly because trail names are more often applied to actual paths/greenways in OSM.
+- **Run** — small sample but consistent with a rural/semi-rural character.
+
+**The convergence cluster:**
+Street, Drive, Lane, Court, Place, Circle, and Way are nearly indistinguishable from each other on all measured attributes. They have collapsed into a single suburban residential archetype — 2 lanes, 25 mph, low sidewalk coverage, moderate connectivity. The suffix carries no predictive information about built form.
+
+---
+
+## Caveats & next steps
+
+- **OSM tagging completeness:** Speed and lane tags are sparse in RI — many ways have no `maxspeed` or `lanes` entry, so profiles lean heavily on highway rank and connectivity. National coverage will improve this.
+- **Intersection density as a metric:** The current measure counts any shared OSM node as an intersection, including driveways and minor service connections. A cleaned version should filter to `highway=*` intersections only.
+- **Geographic scope:** RI is dense, urban, and historically street-grid-heavy (Providence). Results may look different in sprawl-dominant metros — expanding to the full US is the critical next step.
+- **Temporal angle:** Adding parcel/subdivision vintage data could test whether divergence is a post-1950 phenomenon.

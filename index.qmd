@@ -1,0 +1,41 @@
+---
+title: "What's in a Street Name?"
+subtitle: "How street suffix types lost their meaning across eras of American development"
+toc: false
+---
+
+Street suffixes — Road, Court, Boulevard, Lane — once carried typological meaning. A **Court** was a short cul-de-sac. A **Boulevard** was a wide, tree-lined arterial with pedestrian amenity. A **Road** was a rural through-route.
+
+The hypothesis here: the post-war suburban development era decoupled suffix from form, repurposing evocative names as marketing vocabulary. This analysis tests that empirically across four states (Ohio, Kentucky, Rhode Island, Connecticut) using OpenStreetMap road geometry and Census building-era data.
+
+---
+
+## Key Findings
+
+**Most street suffixes have collapsed to a single built form.** Court, Drive, Lane, Place, Circle, Way, and Street are statistically indistinguishable on intersection density and segment length. The suffix carries no predictive information about what the street looks like.
+
+**The collapse is concentrated in the postwar and 1965–1999 development eras.** Spread across suffixes narrows sharply through the postwar boom, reaching its minimum in 1980–1999 neighborhoods — the empirical signature of suburban marketing vocabulary overwriting functional typology.
+
+**A small set of suffixes retain typological identity:** Road (long segments, low connectivity), Trail (long, low), and Alley (short, dense) remain meaningfully differentiated because their identity is functional rather than evocative.
+
+**Boulevard shows the most dramatic drift:** high connectivity in pre-war neighborhoods (often genuinely wide arterials), dropping to generic suburban collector in the postwar era, partially recovering in 2000+ contexts.
+
+---
+
+## Data and Methods
+
+Street segments are drawn from OpenStreetMap for four states — Ohio, Kentucky, Rhode Island, and Connecticut — spanning the Midwest and Northeast. Each segment is spatially joined to its surrounding Census block group's **modal development era** from ACS 2022 data: the decade when the most housing in that block group was built.
+
+Primary built-form measures are **geometric**, derived directly from OSM node structure:
+
+- **Intersection density** (intersections per km): high = connected urban grid; low = dead-end or rural through-road
+- **Segment length** (meters): short segments = fine-grained grid; long segments = arterial or subdivision collector
+
+Speed limits and lane counts are included as supplementary context where OSM contributors have tagged them, but coverage is sparse on residential streets.
+
+---
+
+## Pages
+
+- [**Four-State Analysis**](analysis.qmd) — Full cross-state analysis: suffix convergence, era heatmaps, selected trajectories
+- [**Rhode Island Results**](ri_results.qmd) — State-level analysis with divergence scores against typological archetypes

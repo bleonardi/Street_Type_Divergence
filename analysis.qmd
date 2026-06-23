@@ -1,0 +1,312 @@
+---
+title: "Four-State Analysis"
+subtitle: "Suffix convergence across Ohio, Kentucky, Rhode Island, and Connecticut"
+execute:
+  echo: true
+  warning: false
+---
+
+```{python}
+import pandas as pd
+import numpy as np
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+import matplotlib.colors as mcolors
+from pathlib import Path
+
+DATA_PROC = Path("data/processed")
+FIG_DIR   = Path("data/figures")
+
+HIGHWAY_RANK = {
+    "service": 1, "living_street": 1, "pedestrian": 1, "track": 1,
+    "residential": 2, "unclassified": 2,
+    "tertiary": 3, "tertiary_link": 3,
+    "secondary": 4, "secondary_link": 4,
+    "primary": 5, "primary_link": 5,
+    "trunk": 6, "trunk_link": 6,
+    "motorway": 7, "motorway_link": 7,
+}
+
+ERA_ORDER  = ["pre-1920", "1920s-40s", "postwar boom", "1965-1979", "1980-1999", "2000+"]
+ERA_COLORS = ["#1a237e", "#1565c0", "#0288d1", "#f9a825", "#e65100", "#b71c1c"]
+
+df_raw = pd.read_parquet(DATA_PROC / "streets_with_era.parquet")
+df_raw["hw_rank"]      = df_raw["highway"].map(HIGHWAY_RANK)
+df_raw["has_sidewalk"] = df_raw["sidewalk"].isin(["both","left","right","yes","separate"])
+
+df = df_raw[
+    df_raw["suffix"].notna() &
+    df_raw["era"].notna() &
+    (~df_raw["era"].isin(["unknown"]))
+].copy()
+df["era"] = pd.Categorical(df["era"], categories=ERA_ORDER, ordered=True)
+
+print(f"Dataset: {len(df):,} street segments across {df['state'].nunique()} states")
+print(f"States: {sorted(df['state'].unique())}")
+print(f"Eras:   {df['era'].value_counts().reindex(ERA_ORDER).to_dict()}")
+```
+
+## Overview
+
+Street suffixes — Road, Court, Boulevard, Lane — once carried typological meaning. A **Court** was a short cul-de-sac. A **Boulevard** was a wide, tree-lined arterial with pedestrian amenity. A **Road** was a rural through-route. The hypothesis here: the post-war suburban development era decoupled suffix from form, repurposing evocative names as marketing vocabulary.
+
+This analysis tests that empirically across four states (Ohio, Kentucky, Rhode Island, Connecticut) using OpenStreetMap road geometry. Rather than relying on sparsely-tagged attributes like speed limits and lane counts — which have no consistent national source — the primary built-form measures are **geometric**:
+
+- **Intersection density** (intersections per km): high = connected urban grid; low = dead-end, cul-de-sac, or rural through-road
+- **Segment length** (meters): short segments = fine-grained grid; long segments = arterial or subdivision collector
+
+These are computed directly from OSM node structure, not from human-added tags, making them consistent across all jurisdictions. Speed limits and lane counts are shown where available as supplementary context.
+
+Each street segment is spatially joined to its surrounding Census block group's **modal development era** — the decade when the most housing in that block group was built — from ACS 2022 data. This lets us ask: does a Road in a 1920s neighborhood look different from a Road in a 1980s subdivision?
+
+---
+
+## The collapse: suffixes converging on a single form
+
+```{python}
+# Show that most suffixes are now indistinguishable on core attributes
+top_suffixes = df["suffix"].value_counts().head(12).index.tolist()
+sub = df[df["suffix"].isin(top_suffixes)].copy()
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+for ax, col, label, clip in [
+    (axes[0], "intersection_density", "Intersection density (intx/km)", 80),
+    (axes[1], "way_length_m",         "Segment length (m)",             1500),
+]:
+    sub_clean = sub[sub[col].notna() & (sub[col] < clip)]
+    order = sub_clean.groupby("suffix")[col].median().reindex(top_suffixes).sort_values().index.tolist()
+    data  = [sub_clean.loc[sub_clean["suffix"] == s, col].dropna().values for s in order]
+    vp = ax.violinplot(data, showmedians=True, showextrema=False)
+    for body in vp["bodies"]:
+        body.set_alpha(0.45)
+    ax.set_xticks(range(1, len(order) + 1))
+    ax.set_xticklabels(order, rotation=30, ha="right", fontsize=9)
+    ax.set_ylabel(label)
+    ax.grid(axis="y", alpha=0.25)
+
+fig.suptitle("Built-form distributions by suffix — all four states", fontsize=13, y=1.01)
+plt.tight_layout()
+plt.show()
+```
+
+The violin plots reveal the core finding: **most suffixes are nearly indistinguishable** on segment length and connectivity. Court, Drive, Lane, Place, Circle, Way, and Street all cluster in the same range. The only suffixes that remain meaningfully differentiated are those with a functional rather than evocative identity: Road (long segments, low connectivity), Trail (long, low), and Alley (short, dense).
+
+---
+
+## Connectivity across development eras
+
+The most informative dimension is what happens when you break the same suffix down by the era of surrounding development.
+
+```{python}
+profile = pd.read_csv(DATA_PROC / "era_profiles.csv")
+profile["era"] = pd.Categorical(profile["era"], categories=ERA_ORDER, ordered=True)
+
+# Only suffixes with enough coverage across multiple eras
+era_coverage = profile.groupby("suffix")["era"].count()
+well_covered = era_coverage[era_coverage >= 3].index.tolist()
+
+# Intersection density heatmap
+pivot_intx = (
+    profile[profile["suffix"].isin(well_covered)]
+    .pivot(index="suffix", columns="era", values="intx_density")
+    .reindex(columns=[e for e in ERA_ORDER if e in profile["era"].cat.categories])
+)
+row_order = pivot_intx.mean(axis=1).sort_values(ascending=False).index
+pivot_intx = pivot_intx.loc[row_order]
+
+fig, ax = plt.subplots(figsize=(11, max(5, len(pivot_intx) * 0.48)))
+im = ax.imshow(pivot_intx.values, aspect="auto", cmap="RdYlBu", vmin=8, vmax=35)
+plt.colorbar(im, ax=ax, label="Median intersections per km", shrink=0.7)
+ax.set_xticks(range(len(pivot_intx.columns)))
+ax.set_xticklabels(pivot_intx.columns, rotation=25, ha="right", fontsize=10)
+ax.set_yticks(range(len(pivot_intx.index)))
+ax.set_yticklabels(pivot_intx.index, fontsize=10)
+ax.set_title("Intersection density by suffix × building era\n(blue = well-connected grid; red = isolated/dead-end)", fontsize=12, pad=10)
+for i in range(len(pivot_intx.index)):
+    for j in range(len(pivot_intx.columns)):
+        val = pivot_intx.values[i, j]
+        if not np.isnan(val):
+            ax.text(j, i, f"{val:.0f}", ha="center", va="center", fontsize=8.5,
+                    color="white" if val > 28 or val < 12 else "black")
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+# Segment length heatmap
+pivot_len = (
+    profile[profile["suffix"].isin(well_covered)]
+    .pivot(index="suffix", columns="era", values="way_length_m")
+    .reindex(columns=[e for e in ERA_ORDER if e in profile["era"].cat.categories])
+)
+row_order_l = pivot_len.mean(axis=1).sort_values().index
+pivot_len = pivot_len.loc[row_order_l]
+
+fig, ax = plt.subplots(figsize=(11, max(5, len(pivot_len) * 0.48)))
+im = ax.imshow(pivot_len.values, aspect="auto", cmap="YlOrRd", vmin=80, vmax=420)
+plt.colorbar(im, ax=ax, label="Median segment length (m)", shrink=0.7)
+ax.set_xticks(range(len(pivot_len.columns)))
+ax.set_xticklabels(pivot_len.columns, rotation=25, ha="right", fontsize=10)
+ax.set_yticks(range(len(pivot_len.index)))
+ax.set_yticklabels(pivot_len.index, fontsize=10)
+ax.set_title("Segment length by suffix × building era\n(darker = longer segments = less fine-grained grid)", fontsize=12, pad=10)
+for i in range(len(pivot_len.index)):
+    for j in range(len(pivot_len.columns)):
+        val = pivot_len.values[i, j]
+        if not np.isnan(val):
+            ax.text(j, i, f"{val:.0f}", ha="center", va="center", fontsize=8.5,
+                    color="white" if val > 300 else "black")
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## The convergence story
+
+If suffix names once carried meaningful information about built form, we'd expect **high variance across suffixes** in older eras (each suffix means something different) and **lower variance in newer eras** (they've all collapsed toward a common form). The coefficient of variation across suffixes — lower = more similar to each other — tests this directly.
+
+```{python}
+conv_rows = []
+for era in ERA_ORDER:
+    sub_e = profile[profile["era"] == era]
+    if len(sub_e) < 4:
+        continue
+    for attr, label in [
+        ("intx_density", "Intersection density"),
+        ("way_length_m", "Segment length"),
+    ]:
+        vals = sub_e[attr].dropna()
+        if len(vals) < 4:
+            continue
+        conv_rows.append({
+            "era": era, "attr": label,
+            "cv":  vals.std() / vals.mean(),
+            "iqr": vals.quantile(0.75) - vals.quantile(0.25),
+        })
+conv = pd.DataFrame(conv_rows)
+
+fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+for ax, attr in zip(axes, ["Intersection density", "Segment length"]):
+    sub_c = conv[conv["attr"] == attr].set_index("era").reindex(ERA_ORDER).dropna()
+    colors = [ERA_COLORS[i] for i, e in enumerate(ERA_ORDER) if e in sub_c.index]
+    ax.plot(range(len(sub_c)), sub_c["cv"].values, marker="o", color="#333",
+            linewidth=2, zorder=3)
+    for i, (cv, c) in enumerate(zip(sub_c["cv"].values, colors)):
+        ax.scatter(i, cv, color=c, s=80, zorder=4)
+    ax.set_xticks(range(len(sub_c)))
+    ax.set_xticklabels(sub_c.index, rotation=22, ha="right", fontsize=9)
+    ax.set_ylabel("Coeff. of variation across suffixes\n(lower = suffixes more similar to each other)")
+    ax.set_title(attr, fontsize=11)
+    ax.grid(axis="y", alpha=0.25)
+    # annotate direction
+    ax.annotate("suffixes differ", xy=(0, sub_c["cv"].values[0]),
+                xytext=(0.15, sub_c["cv"].values[0] + 0.02), fontsize=8, color="#555")
+    ax.annotate("suffixes converge", xy=(len(sub_c)-2, sub_c["cv"].values[-2]),
+                xytext=(len(sub_c)-2.5, sub_c["cv"].values[-2] - 0.04), fontsize=8, color="#555")
+
+fig.suptitle("Suffix convergence over development eras", fontsize=13, y=1.02)
+plt.tight_layout()
+plt.show()
+```
+
+Both attributes show the same trajectory: **spread across suffixes narrows from the 1920s-40s through the postwar and 1965-1979 eras**, bottoming out in the 1980-1999 period — the peak of American auto-oriented sprawl. This is the empirical signature of suffix vocabulary becoming meaningless: by the time a neighborhood is built in the 1980s, whether the developer names a street "Court," "Lane," "Drive," or "Circle" carries almost no information about what that street actually looks like.
+
+---
+
+## Selected suffix trajectories
+
+```{python}
+# Focus on the suffixes with interesting era trajectories
+HIGHLIGHT = ["Boulevard", "Avenue", "Street", "Court", "Road", "Drive", "Lane"]
+sub_h = profile[profile["suffix"].isin(HIGHLIGHT)].copy()
+
+fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+era_pos = {e: i for i, e in enumerate(ERA_ORDER)}
+
+for ax, attr, label in [
+    (axes[0], "intx_density", "Median intersection density (intx/km)"),
+    (axes[1], "way_length_m", "Median segment length (m)"),
+]:
+    for suffix, grp in sub_h.groupby("suffix"):
+        grp = grp.sort_values("era")
+        eras_present = [e for e in ERA_ORDER if e in grp["era"].values]
+        vals = grp.set_index("era").reindex(ERA_ORDER)[attr].dropna()
+        x = [era_pos[e] for e in vals.index]
+        ax.plot(x, vals.values, marker="o", label=suffix, linewidth=2)
+
+    ax.set_xticks(range(len(ERA_ORDER)))
+    ax.set_xticklabels(ERA_ORDER, rotation=22, ha="right", fontsize=9)
+    ax.set_ylabel(label)
+    ax.legend(fontsize=9, loc="upper right")
+    ax.grid(axis="y", alpha=0.25)
+
+fig.suptitle("Built-form trajectories by suffix across development eras", fontsize=12, y=1.01)
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Speed and lane counts (supplementary)
+
+Speed limits and lane counts are included where OSM contributors have tagged them, but coverage is sparse — particularly on residential streets, which is precisely where the suffix-meaning question is most interesting. No consistent national source exists for local road attributes. These figures should be read as directional rather than comprehensive.
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+for ax, col, label, clip in [
+    (axes[0], "maxspeed", "Posted speed limit (mph)", 75),
+    (axes[1], "lanes",    "Lane count",               8),
+]:
+    sub_attr = df[df["suffix"].isin(top_suffixes) & df[col].notna() & (df[col] < clip)]
+    if len(sub_attr) < 100:
+        ax.text(0.5, 0.5, f"Insufficient tag coverage\nfor {label}",
+                ha="center", va="center", transform=ax.transAxes, fontsize=11, color="#888")
+        ax.set_title(label)
+        continue
+    order = sub_attr.groupby("suffix")[col].median().reindex(top_suffixes).sort_values().dropna().index.tolist()
+    data  = [sub_attr.loc[sub_attr["suffix"] == s, col].dropna().values for s in order]
+    vp = ax.violinplot(data, showmedians=True, showextrema=False)
+    for body in vp["bodies"]:
+        body.set_alpha(0.45)
+    ax.set_xticks(range(1, len(order) + 1))
+    ax.set_xticklabels(order, rotation=30, ha="right", fontsize=9)
+    ax.set_ylabel(label)
+    ax.grid(axis="y", alpha=0.25)
+    n_tagged = sub_attr["suffix"].value_counts().reindex(order).fillna(0)
+    ax.set_title(f"{label}\n(OSM-tagged only; n={len(sub_attr):,} of {df['suffix'].isin(order).sum():,} segments)", fontsize=10)
+
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Key findings
+
+**1. Most street suffixes have collapsed to a single built form.**
+Court, Drive, Lane, Place, Circle, Way, and Street are statistically indistinguishable on intersection density and segment length in the four-state sample. The suffix carries no predictive information about what the street looks like.
+
+**2. The collapse is concentrated in the postwar and 1965–1999 development eras.**
+Spread across suffixes is highest in 1920s-40s neighborhoods — where Court genuinely meant something different from Avenue — and narrows sharply through the postwar boom and 1965-1979 period, reaching its minimum in 1980-1999 neighborhoods. This is the empirical signature of suburban marketing vocabulary overwriting functional typology.
+
+**3. A small set of suffixes retain typological identity.**
+- **Road** — consistently long segments, low connectivity, across all eras. Remains the most honest suffix.
+- **Trail** — long segments, low connectivity, especially in older eras where it often describes repurposed rural routes.
+- **Alley** — short, dense, structurally distinct regardless of era.
+- **Boulevard** — shows the most dramatic drift: high connectivity in pre-war neighborhoods (where it often genuinely described a wide arterial), dropping to generic suburban collector in postwar and 1965-1979 development, partially recovering in 2000+ contexts.
+
+**4. Avenue and Street show a U-curve in connectivity.**
+Both are at their most connected in 1920s-40s grids (~22-23 intx/km), collapse to minimum connectivity in the 1965-1979 era (~17-18 intx/km), then partially recover in 2000+ development. This mirrors the broader arc of American urban design: grid → cul-de-sac → partial reconnection.
+
+---
+
+## Caveats
+
+- **Geographic scope:** Four states (OH, KY, RI, CT) spanning the Midwest and Northeast. Results may differ in the South and West, where development history and grid conventions diverge.
+- **Speed/lanes:** OSM tag coverage is too sparse for reliable national analysis. No consistent local-road dataset exists nationally.
+- **Era assignment:** Based on modal decade of housing construction in the Census block group — a neighborhood-level proxy, not parcel-level build date. Streets in mixed-vintage neighborhoods may be misclassified.
+- **OSM intersection density:** Counts any shared node between highway ways, including driveways and minor service connections. Filtering to named intersections only would give cleaner numbers.
