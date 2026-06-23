@@ -4,7 +4,6 @@ project:
   render:
     - index.qmd
     - analysis.qmd
-    - ri_results.qmd
 
 website:
   title: "What's in a Street Name?"
@@ -13,9 +12,7 @@ website:
       - href: index.qmd
         text: Overview
       - href: analysis.qmd
-        text: Four-State Analysis
-      - href: ri_results.qmd
-        text: Rhode Island
+        text: Analysis
 
 format:
   html:

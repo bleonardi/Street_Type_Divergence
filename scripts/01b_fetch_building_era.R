@@ -8,7 +8,13 @@ library(arrow)
 # B25035_001E: Median year structure built — pre-computed by Census, clean and simple.
 # B25034: Year structure built bins — for modal era, more robust than median in mixed BGs.
 
-STATES <- c("RI", "CT", "OH", "KY")
+STATES <- c(
+  "AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI",
+  "ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN",
+  "MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH",
+  "OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV",
+  "WI","WY"
+)
 
 ERA_BREAKS <- function(y) {
   case_when(

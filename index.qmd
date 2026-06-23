@@ -35,7 +35,4 @@ Speed limits and lane counts are included as supplementary context where OSM con
 
 ---
 
-## Pages
-
-- [**Four-State Analysis**](analysis.qmd) — Full cross-state analysis: suffix convergence, era heatmaps, selected trajectories
-- [**Rhode Island Results**](ri_results.qmd) — State-level analysis with divergence scores against typological archetypes
+[Analysis →](analysis.qmd){.btn .btn-outline-primary .btn-sm}

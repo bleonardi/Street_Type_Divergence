@@ -179,21 +179,35 @@ def process_pbf(pbf_path: Path, state: str) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    dfs = []
-    for pbf in sorted(DATA_RAW.glob("*_roads.osm.pbf")):
-        state = pbf.name.replace("_roads.osm.pbf", "").replace(".osm", "")
-        print(f"Processing {state}...")
-        dfs.append(process_pbf(pbf, state))
+    # Write per-state parquets to keep peak memory bounded;
+    # downstream scripts read via DuckDB wildcard glob.
+    PER_STATE = DATA_PROC / "streets_by_state"
+    PER_STATE.mkdir(exist_ok=True)
 
-    if not dfs:
+    pbfs = sorted(DATA_RAW.glob("*_roads.osm.pbf"))
+    if not pbfs:
         print("No *_roads.osm.pbf files found. Run 01_fetch_data.py first.")
     else:
-        combined = pd.concat(dfs, ignore_index=True)
-        out = DATA_PROC / "streets.parquet"
-        combined.to_parquet(out, index=False)
-        print(f"\nSaved {len(combined):,} rows -> {out}")
-        print("\nSuffix counts:")
-        print(combined["suffix"].value_counts().head(20))
-        print("\nSample connectivity stats:")
-        print(combined[["suffix","way_length_m","intersection_density"]]
-              .groupby("suffix").median().round(1))
+        for pbf in pbfs:
+            state = pbf.name.replace("_roads.osm.pbf", "").replace(".osm", "")
+            out = PER_STATE / f"{state}.parquet"
+            if out.exists():
+                print(f"[skip] {state} already extracted")
+                continue
+            print(f"Processing {state}...")
+            df = process_pbf(pbf, state)
+            df.to_parquet(out, index=False)
+            print(f"  Saved {len(df):,} rows -> {out.name}")
+
+        # Write a combined view via DuckDB for compatibility with downstream scripts
+        import duckdb
+        combined_path = DATA_PROC / "streets.parquet"
+        print(f"\nMerging per-state parquets -> {combined_path} ...")
+        con = duckdb.connect()
+        con.execute(f"""
+            COPY (SELECT * FROM read_parquet('{PER_STATE}/*.parquet'))
+            TO '{combined_path}' (FORMAT PARQUET)
+        """)
+        n = con.execute(f"SELECT COUNT(*) FROM read_parquet('{combined_path}')").fetchone()[0]
+        print(f"Saved {n:,} rows -> {combined_path}")
+        con.close()

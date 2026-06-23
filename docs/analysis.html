@@ -130,11 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./analysis.html" aria-current="page"> 
-<span class="menu-text">Four-State Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./ri_results.html"> 
-<span class="menu-text">Rhode Island</span></a>
+<span class="menu-text">Analysis</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -186,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="d0fd80ac" class="cell" data-execution_count="1">
+<div id="716a22ce" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -229,9 +225,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Eras:   </span><span class="sc">{</span>df[<span class="st">'era'</span>]<span class="sc">.</span>value_counts()<span class="sc">.</span>reindex(ERA_ORDER)<span class="sc">.</span>to_dict()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Dataset: 647,131 street segments across 4 states
-States: ['connecticut', 'kentucky', 'ohio', 'rhode-island']
-Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979': 150819, '1980-1999': 159434, '2000+': 102332}</code></pre>
+<pre><code>Dataset: 10,818,249 street segments across 50 states
+States: ['alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut', 'delaware', 'district-of-columbia', 'florida', 'georgia', 'hawaii', 'idaho', 'illinois', 'indiana', 'iowa', 'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan', 'minnesota', 'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new-hampshire', 'new-jersey', 'new-mexico', 'new-york', 'north-carolina', 'north-dakota', 'ohio', 'oregon', 'pennsylvania', 'rhode-island', 'south-carolina', 'south-dakota', 'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west-virginia', 'wisconsin', 'wyoming']
+Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-1979': 2416740, '1980-1999': 2928187, '2000+': 2647498}</code></pre>
 </div>
 </div>
 <section id="overview" class="level2">
@@ -248,7 +244,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 </section>
 <section id="the-collapse-suffixes-converging-on-a-single-form" class="level2">
 <h2 class="anchored" data-anchor-id="the-collapse-suffixes-converging-on-a-single-form">The collapse: suffixes converging on a single form</h2>
-<div id="ba9918d8" class="cell" data-execution_count="2">
+<div id="c655543e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show that most suffixes are now indistinguishable on core attributes</span></span>
@@ -290,7 +286,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <section id="connectivity-across-development-eras" class="level2">
 <h2 class="anchored" data-anchor-id="connectivity-across-development-eras">Connectivity across development eras</h2>
 <p>The most informative dimension is what happens when you break the same suffix down by the era of surrounding development.</p>
-<div id="e9dc36bd" class="cell" data-execution_count="3">
+<div id="3287c601" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> pd.read_csv(DATA_PROC <span class="op">/</span> <span class="st">"era_profiles.csv"</span>)</span>
@@ -329,12 +325,12 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-4-output-1.png" width="980" height="913" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-4-output-1.png" width="982" height="960" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="3d50d1de" class="cell" data-execution_count="4">
+<div id="5bc563a5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment length heatmap</span></span>
@@ -366,7 +362,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-5-output-1.png" width="988" height="913" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-5-output-1.png" width="990" height="960" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -376,7 +372,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <section id="the-convergence-story" class="level2">
 <h2 class="anchored" data-anchor-id="the-convergence-story">The convergence story</h2>
 <p>If suffix names once carried meaningful information about built form, we’d expect <strong>high variance across suffixes</strong> in older eras (each suffix means something different) and <strong>lower variance in newer eras</strong> (they’ve all collapsed toward a common form). The coefficient of variation across suffixes — lower = more similar to each other — tests this directly.</p>
-<div id="e0295c6a" class="cell" data-execution_count="5">
+<div id="375271b5" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>conv_rows <span class="op">=</span> []</span>
@@ -434,7 +430,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 </section>
 <section id="selected-suffix-trajectories" class="level2">
 <h2 class="anchored" data-anchor-id="selected-suffix-trajectories">Selected suffix trajectories</h2>
-<div id="370a466e" class="cell" data-execution_count="6">
+<div id="c5b77457" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on the suffixes with interesting era trajectories</span></span>
@@ -468,7 +464,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-7-output-1.png" width="1240" height="489" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-7-output-1.png" width="1237" height="489" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -478,7 +474,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 156511, 'postwar boom': 78035, '1965-1979':
 <section id="speed-and-lane-counts-supplementary" class="level2">
 <h2 class="anchored" data-anchor-id="speed-and-lane-counts-supplementary">Speed and lane counts (supplementary)</h2>
 <p>Speed limits and lane counts are included where OSM contributors have tagged them, but coverage is sparse — particularly on residential streets, which is precisely where the suffix-meaning question is most interesting. No consistent national source exists for local road attributes. These figures should be read as directional rather than comprehensive.</p>
-<div id="633d2fe8" class="cell" data-execution_count="7">
+<div id="0794b22a" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
