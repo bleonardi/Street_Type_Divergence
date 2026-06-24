@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Four-State Analysis – What’s in a Street Name?</title>
+<title>Analysis – What’s in a Street Name?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -154,6 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-convergence-story" id="toc-the-convergence-story" class="nav-link" data-scroll-target="#the-convergence-story">The convergence story</a></li>
   <li><a href="#selected-suffix-trajectories" id="toc-selected-suffix-trajectories" class="nav-link" data-scroll-target="#selected-suffix-trajectories">Selected suffix trajectories</a></li>
   <li><a href="#speed-and-lane-counts-supplementary" id="toc-speed-and-lane-counts-supplementary" class="nav-link" data-scroll-target="#speed-and-lane-counts-supplementary">Speed and lane counts (supplementary)</a></li>
+  <li><a href="#whats-in-the-name-itself" id="toc-whats-in-the-name-itself" class="nav-link" data-scroll-target="#whats-in-the-name-itself">What’s in the name itself?</a></li>
   <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings">Key findings</a></li>
   <li><a href="#caveats" id="toc-caveats" class="nav-link" data-scroll-target="#caveats">Caveats</a></li>
   </ul>
@@ -164,8 +165,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Four-State Analysis</h1>
-<p class="subtitle lead">Suffix convergence across Ohio, Kentucky, Rhode Island, and Connecticut</p>
+<h1 class="title">Analysis</h1>
+<p class="subtitle lead">How suffix types lost their meaning across eras of American development</p>
 </div>
 
 
@@ -182,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="716a22ce" class="cell" data-execution_count="1">
+<div id="26987c1e" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -244,7 +245,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </section>
 <section id="the-collapse-suffixes-converging-on-a-single-form" class="level2">
 <h2 class="anchored" data-anchor-id="the-collapse-suffixes-converging-on-a-single-form">The collapse: suffixes converging on a single form</h2>
-<div id="c655543e" class="cell" data-execution_count="2">
+<div id="6cd82ede" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show that most suffixes are now indistinguishable on core attributes</span></span>
@@ -286,7 +287,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="connectivity-across-development-eras" class="level2">
 <h2 class="anchored" data-anchor-id="connectivity-across-development-eras">Connectivity across development eras</h2>
 <p>The most informative dimension is what happens when you break the same suffix down by the era of surrounding development.</p>
-<div id="3287c601" class="cell" data-execution_count="3">
+<div id="1638501b" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> pd.read_csv(DATA_PROC <span class="op">/</span> <span class="st">"era_profiles.csv"</span>)</span>
@@ -330,7 +331,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </div>
 </div>
 </div>
-<div id="5bc563a5" class="cell" data-execution_count="4">
+<div id="112fa604" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment length heatmap</span></span>
@@ -372,7 +373,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="the-convergence-story" class="level2">
 <h2 class="anchored" data-anchor-id="the-convergence-story">The convergence story</h2>
 <p>If suffix names once carried meaningful information about built form, we’d expect <strong>high variance across suffixes</strong> in older eras (each suffix means something different) and <strong>lower variance in newer eras</strong> (they’ve all collapsed toward a common form). The coefficient of variation across suffixes — lower = more similar to each other — tests this directly.</p>
-<div id="375271b5" class="cell" data-execution_count="5">
+<div id="27d1296d" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>conv_rows <span class="op">=</span> []</span>
@@ -430,7 +431,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </section>
 <section id="selected-suffix-trajectories" class="level2">
 <h2 class="anchored" data-anchor-id="selected-suffix-trajectories">Selected suffix trajectories</h2>
-<div id="c5b77457" class="cell" data-execution_count="6">
+<div id="bd633fa9" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on the suffixes with interesting era trajectories</span></span>
@@ -474,7 +475,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="speed-and-lane-counts-supplementary" class="level2">
 <h2 class="anchored" data-anchor-id="speed-and-lane-counts-supplementary">Speed and lane counts (supplementary)</h2>
 <p>Speed limits and lane counts are included where OSM contributors have tagged them, but coverage is sparse — particularly on residential streets, which is precisely where the suffix-meaning question is most interesting. No consistent national source exists for local road attributes. These figures should be read as directional rather than comprehensive.</p>
-<div id="0794b22a" class="cell" data-execution_count="7">
+<div id="3d2abe12" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
@@ -514,18 +515,183 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </div>
 <hr>
 </section>
+<section id="whats-in-the-name-itself" class="level2">
+<h2 class="anchored" data-anchor-id="whats-in-the-name-itself">What’s in the name itself?</h2>
+<p>The suffix analysis above measures form. This section asks a different question: do the <em>names</em> themselves — stripped of their suffix — encode local meaning, or have they become as generic as the streets they label?</p>
+<p>Three lenses on placelessness, computed across all 12.8 million named ways nationally:</p>
+<div id="53268280" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ERA_ORDER_NAME <span class="op">=</span> [<span class="st">"1920s-40s"</span>, <span class="st">"postwar boom"</span>, <span class="st">"1965-1979"</span>, <span class="st">"1980-1999"</span>, <span class="st">"2000+"</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>nm <span class="op">=</span> pd.read_parquet(DATA_PROC <span class="op">/</span> <span class="st">"name_analysis.parquet"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>nm <span class="op">=</span> nm[nm[<span class="st">"era"</span>].isin(ERA_ORDER_NAME)]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>era_stats <span class="op">=</span> nm.groupby(<span class="st">"era"</span>).agg(</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span>(<span class="st">"base"</span>, <span class="st">"count"</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    median_diffusion<span class="op">=</span>(<span class="st">"n_states"</span>, <span class="st">"median"</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    mean_diffusion<span class="op">=</span>(<span class="st">"n_states"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    prestige_pct<span class="op">=</span>(<span class="st">"has_prestige"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    nature_compound_pct<span class="op">=</span>(<span class="st">"is_nature_compound"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    mean_tokens<span class="op">=</span>(<span class="st">"token_count"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>).reindex(ERA_ORDER_NAME)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="fl">4.5</span>))</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Street name placelessness by development era"</span>, fontsize<span class="op">=</span><span class="dv">13</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(ERA_ORDER_NAME))</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.6</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>era_labels <span class="op">=</span> [e.replace(<span class="st">"postwar boom"</span>, <span class="st">"postwar</span><span class="ch">\n</span><span class="st">boom"</span>) <span class="cf">for</span> e <span class="kw">in</span> ERA_ORDER_NAME]</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">"#1565c0"</span>, <span class="st">"#0288d1"</span>, <span class="st">"#f9a825"</span>, <span class="st">"#e65100"</span>, <span class="st">"#b71c1c"</span>]</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Geographic diffusion</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>vals <span class="op">=</span> era_stats[<span class="st">"median_diffusion"</span>].values</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.bar(x, vals, width<span class="op">=</span>w, color<span class="op">=</span>colors)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x)<span class="op">;</span> ax.set_xticklabels(era_labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Median states name appears in"</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Geographic diffusion"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars, vals):</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, v <span class="op">+</span> <span class="fl">0.2</span>, <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:.0f}</span><span class="ss">"</span>,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prestige / marketing vocabulary</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>vals2 <span class="op">=</span> era_stats[<span class="st">"prestige_pct"</span>].values <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax.bar(x, vals2, width<span class="op">=</span>w, color<span class="op">=</span>colors)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x)<span class="op">;</span> ax.set_xticklabels(era_labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"% with marketing vocabulary"</span>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Prestige / marketing words"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mticker.FormatStrFormatter(<span class="st">'%.0f</span><span class="sc">%%</span><span class="st">'</span>))</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars2, vals2):</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, v <span class="op">+</span> <span class="fl">0.1</span>, <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:.1f}</span><span class="ss">%"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Token count</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>vals3 <span class="op">=</span> era_stats[<span class="st">"mean_tokens"</span>].values</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>bars3 <span class="op">=</span> ax.bar(x, vals3, width<span class="op">=</span>w, color<span class="op">=</span>colors)</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x)<span class="op">;</span> ax.set_xticklabels(era_labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Mean words in base name"</span>)</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Name length"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="fl">1.5</span>, <span class="fl">1.85</span>)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, v <span class="kw">in</span> <span class="bu">zip</span>(bars3, vals3):</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="dv">2</span>, v <span class="op">+</span> <span class="fl">0.002</span>, <span class="ss">f"</span><span class="sc">{</span>v<span class="sc">:.2f}</span><span class="ss">"</span>,</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">"center"</span>, va<span class="op">=</span><span class="st">"bottom"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/cell-9-output-1.png" width="1239" height="445" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Geographic diffusion</strong> (left) measures how many states each base name appears in nationally — a proxy for genericness. The median drops from <strong>25 states</strong> in 1920s-40s neighborhoods to <strong>10 states</strong> in 2000+ neighborhoods. This sounds like new streets are more locally unique, but the top-name tables tell the real story: 1920s-40s streets are named after people (Washington, Lincoln) and the grid (2nd, 3rd, 4th) — genuinely national in the sense of shared civic vocabulary. Post-1980 streets have low diffusion because developer-coined compound names (“Whispering Pines,” “Sugar Creek”) are unique by construction, not because they reference anything local.</p>
+<p><strong>Marketing vocabulary</strong> (center) — words like <em>Estates, Manor, Pointe, Reserve, Ridge, Glen, Springs</em> — rises from <strong>7.4% to 11.5%</strong> of street names across eras. The 1965-1979 generation is the inflection point, the first suburban wave to fully adopt pastoral branding as a development strategy.</p>
+<p><strong>Name length</strong> (right) is the subtlest signal but directionally consistent: base names grow from 1.64 to 1.74 words on average. Pre-war streets are mostly monosyllabic (Elm, Main, Oak). Suburban streets pile on modifiers (Shady Valley, Pleasant Ridge, Sugar Creek) to evoke a landscape that development has often replaced.</p>
+<div id="345aaf76" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top names per era — show the vocabulary shift</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Most common base names by era (★ = contains marketing/nature vocabulary)</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>PRESTIGE <span class="op">=</span> {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ESTATES"</span>,<span class="st">"ESTATE"</span>,<span class="st">"MANOR"</span>,<span class="st">"POINTE"</span>,<span class="st">"GRANDE"</span>,<span class="st">"GRAND"</span>,<span class="st">"ROYAL"</span>,<span class="st">"IMPERIAL"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RESERVE"</span>,<span class="st">"PRESERVE"</span>,<span class="st">"ENCLAVE"</span>,<span class="st">"COMMONS"</span>,<span class="st">"CROSSING"</span>,<span class="st">"LANDING"</span>,<span class="st">"HAVEN"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RETREAT"</span>,<span class="st">"SANCTUARY"</span>,<span class="st">"GATEWAY"</span>,<span class="st">"OVERLOOK"</span>,<span class="st">"VISTA"</span>,<span class="st">"GLEN"</span>,<span class="st">"CHASE"</span>,<span class="st">"RUN"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HOLLOW"</span>,<span class="st">"VALE"</span>,<span class="st">"CREST"</span>,<span class="st">"BLUFF"</span>,<span class="st">"MEADOW"</span>,<span class="st">"MEADOWS"</span>,<span class="st">"BROOK"</span>,<span class="st">"CREEK"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SPRINGS"</span>,<span class="st">"SPRING"</span>,<span class="st">"FALLS"</span>,<span class="st">"LAKE"</span>,<span class="st">"LAKES"</span>,<span class="st">"POND"</span>,<span class="st">"PINES"</span>,<span class="st">"PINE"</span>,<span class="st">"OAK"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OAKS"</span>,<span class="st">"ELM"</span>,<span class="st">"MAPLE"</span>,<span class="st">"CEDAR"</span>,<span class="st">"WILLOW"</span>,<span class="st">"BIRCH"</span>,<span class="st">"ASH"</span>,<span class="st">"HICKORY"</span>,<span class="st">"WALNUT"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CHESTNUT"</span>,<span class="st">"SYCAMORE"</span>,<span class="st">"MAGNOLIA"</span>,<span class="st">"DOGWOOD"</span>,<span class="st">"LAUREL"</span>,<span class="st">"IVY"</span>,<span class="st">"FERN"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HEATHER"</span>,<span class="st">"CLOVER"</span>,<span class="st">"BRIAR"</span>,<span class="st">"RIDGE"</span>,<span class="st">"SUMMIT"</span>,<span class="st">"HILLS"</span>,<span class="st">"HILL"</span>,<span class="st">"VALE"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> era <span class="kw">in</span> ERA_ORDER_NAME:</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    sub <span class="op">=</span> nm[nm[<span class="st">"era"</span>] <span class="op">==</span> era]</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> sub.groupby(<span class="st">"base"</span>).agg(n<span class="op">=</span>(<span class="st">"base"</span>,<span class="st">"count"</span>), states<span class="op">=</span>(<span class="st">"n_states"</span>,<span class="st">"first"</span>)).nlargest(<span class="dv">8</span>,<span class="st">"n"</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"── </span><span class="sc">{</span>era<span class="sc">}</span><span class="ss"> ──"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> base, row <span class="kw">in</span> top.iterrows():</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        flag <span class="op">=</span> <span class="st">"★"</span> <span class="cf">if</span> <span class="bu">bool</span>(<span class="bu">set</span>(base.split()) <span class="op">&amp;</span> PRESTIGE) <span class="cf">else</span> <span class="st">" "</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>flag<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>base<span class="sc">:&lt;28}</span><span class="ss">  n=</span><span class="sc">{</span>row[<span class="st">'n'</span>]<span class="sc">:&gt;6,}</span><span class="ss">  (</span><span class="sc">{</span>row[<span class="st">'states'</span>]<span class="sc">:.0f}</span><span class="ss"> states)"</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Most common base names by era (★ = contains marketing/nature vocabulary)
+
+── 1920s-40s ──
+    MAIN                          n=14,490  (50 states)
+    PARK                          n= 6,795  (50 states)
+    WASHINGTON                    n= 6,139  (49 states)
+  ★ MAPLE                         n= 5,438  (49 states)
+    2ND                           n= 5,375  (50 states)
+    3RD                           n= 5,252  (50 states)
+    1ST                           n= 5,022  (50 states)
+    4TH                           n= 4,627  (50 states)
+
+── postwar boom ──
+    MAIN                          n= 2,958  (50 states)
+    PARK                          n= 2,460  (50 states)
+    WASHINGTON                    n= 2,114  (49 states)
+  ★ MAPLE                         n= 1,749  (49 states)
+  ★ OAK                           n= 1,676  (48 states)
+    LINCOLN                       n= 1,675  (50 states)
+  ★ ELM                           n= 1,398  (50 states)
+    CENTRAL                       n= 1,358  (49 states)
+
+── 1965-1979 ──
+    MAIN                          n= 6,514  (50 states)
+    PARK                          n= 4,441  (50 states)
+  ★ OAK                           n= 3,683  (48 states)
+    WASHINGTON                    n= 3,622  (49 states)
+  ★ MAPLE                         n= 3,412  (49 states)
+  ★ PINE                          n= 3,029  (50 states)
+    2ND                           n= 2,964  (50 states)
+  ★ CEDAR                         n= 2,908  (50 states)
+
+── 1980-1999 ──
+    MAIN                          n= 6,685  (50 states)
+    PARK                          n= 3,744  (50 states)
+  ★ OAK                           n= 3,344  (48 states)
+    RIVER                         n= 3,060  (50 states)
+  ★ PINE                          n= 2,983  (50 states)
+    WASHINGTON                    n= 2,981  (49 states)
+  ★ CEDAR                         n= 2,873  (50 states)
+  ★ MAPLE                         n= 2,857  (49 states)
+
+── 2000+ ──
+    MAIN                          n= 5,644  (50 states)
+    PARK                          n= 2,901  (50 states)
+    WASHINGTON                    n= 2,606  (49 states)
+    RIVER                         n= 2,238  (50 states)
+  ★ OAK                           n= 2,221  (48 states)
+  ★ PINE                          n= 1,999  (50 states)
+    AIRPORT                       n= 1,962  (49 states)
+  ★ MAPLE                         n= 1,952  (49 states)
+</code></pre>
+</div>
+</div>
+<p>The top-name tables make the story concrete. In 1920s-40s neighborhoods, the most common names are <strong>Main, Park, Washington, 2nd, 3rd, 4th</strong> — a civic vocabulary of grid coordinates and national honorifics. By 1980-1999, the ordinal grid recedes and nature words dominate: <strong>Oak, Pine, Cedar, Maple, River</strong>. These names appear in 48-50 states — not locally referential, just generically pastoral.</p>
+<hr>
+</section>
 <section id="key-findings" class="level2">
 <h2 class="anchored" data-anchor-id="key-findings">Key findings</h2>
 <p><strong>1. Most street suffixes have collapsed to a single built form.</strong> Court, Drive, Lane, Place, Circle, Way, and Street are statistically indistinguishable on intersection density and segment length in the four-state sample. The suffix carries no predictive information about what the street looks like.</p>
 <p><strong>2. The collapse is concentrated in the postwar and 1965–1999 development eras.</strong> Spread across suffixes is highest in 1920s-40s neighborhoods — where Court genuinely meant something different from Avenue — and narrows sharply through the postwar boom and 1965-1979 period, reaching its minimum in 1980-1999 neighborhoods. This is the empirical signature of suburban marketing vocabulary overwriting functional typology.</p>
 <p><strong>3. A small set of suffixes retain typological identity.</strong> - <strong>Road</strong> — consistently long segments, low connectivity, across all eras. Remains the most honest suffix. - <strong>Trail</strong> — long segments, low connectivity, especially in older eras where it often describes repurposed rural routes. - <strong>Alley</strong> — short, dense, structurally distinct regardless of era. - <strong>Boulevard</strong> — shows the most dramatic drift: high connectivity in pre-war neighborhoods (where it often genuinely described a wide arterial), dropping to generic suburban collector in postwar and 1965-1979 development, partially recovering in 2000+ contexts.</p>
 <p><strong>4. Avenue and Street show a U-curve in connectivity.</strong> Both are at their most connected in 1920s-40s grids (~22-23 intx/km), collapse to minimum connectivity in the 1965-1979 era (~17-18 intx/km), then partially recover in 2000+ development. This mirrors the broader arc of American urban design: grid → cul-de-sac → partial reconnection.</p>
+<p><strong>5. Street names shifted from civic vocabulary to invented pastoral.</strong> Pre-war neighborhoods are named after people (Washington, Lincoln) and the grid (2nd, 3rd, Main) — a shared national civic vocabulary. Post-1965 development adopts nature words (Oak, Pine, Cedar, Maple) that appear in 48-50 states, followed by developer-coined compounds (Sugar Creek, Shady Valley, Whispering Pines) that are unique by construction but locally meaningless. Marketing vocabulary share rises from 7.4% to 11.5% across eras. The street name has become a branding decision, not a local memory.</p>
 <hr>
 </section>
 <section id="caveats" class="level2">
 <h2 class="anchored" data-anchor-id="caveats">Caveats</h2>
 <ul>
-<li><strong>Geographic scope:</strong> Four states (OH, KY, RI, CT) spanning the Midwest and Northeast. Results may differ in the South and West, where development history and grid conventions diverge.</li>
+<li><strong>Geographic scope:</strong> All 50 states, ~50M street ways. OSM coverage is denser in urban areas and the Northeast; rural and Western states may be underrepresented in residential street data.</li>
 <li><strong>Speed/lanes:</strong> OSM tag coverage is too sparse for reliable national analysis. No consistent local-road dataset exists nationally.</li>
 <li><strong>Era assignment:</strong> Based on modal decade of housing construction in the Census block group — a neighborhood-level proxy, not parcel-level build date. Streets in mixed-vintage neighborhoods may be misclassified.</li>
 <li><strong>OSM intersection density:</strong> Counts any shared node between highway ways, including driveways and minor service connections. Filtering to named intersections only would give cleaner numbers.</li>
