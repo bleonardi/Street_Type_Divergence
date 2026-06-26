@@ -1,5 +1,82 @@
 [
   {
+    "objectID": "spatial.html",
+    "href": "spatial.html",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "",
+    "text": "Suburban street networks are not designed in isolation. Developers and planners look at neighboring subdivisions when deciding how to lay out new streets. If this neighborhood-copying dynamic is real, we should see a measurable spatial lag — a block group’s share of dead-end streets should be strongly predicted by its neighbors’ share, above and beyond shared state-level norms or national trends.\nAnd the strength of that copying should vary over time. The cul-de-sac as design ideology spread rapidly through the 1960s and 1970s, became a regulatory default by the 1980s, and has faced mounting criticism from New Urbanism and walkability advocates since the 2000s. If mimetic copying was the mechanism, the spatial lag β should rise and fall accordingly."
+  },
+  {
+    "objectID": "spatial.html#the-question",
+    "href": "spatial.html#the-question",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "",
+    "text": "Suburban street networks are not designed in isolation. Developers and planners look at neighboring subdivisions when deciding how to lay out new streets. If this neighborhood-copying dynamic is real, we should see a measurable spatial lag — a block group’s share of dead-end streets should be strongly predicted by its neighbors’ share, above and beyond shared state-level norms or national trends.\nAnd the strength of that copying should vary over time. The cul-de-sac as design ideology spread rapidly through the 1960s and 1970s, became a regulatory default by the 1980s, and has faced mounting criticism from New Urbanism and walkability advocates since the 2000s. If mimetic copying was the mechanism, the spatial lag β should rise and fall accordingly."
+  },
+  {
+    "objectID": "spatial.html#data",
+    "href": "spatial.html#data",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Data",
+    "text": "Data\nBlock groups are drawn from ACS 2022 data across 48 states (~207,000 block groups). Each block group’s cul-de-sac share is computed from OpenStreetMap: the fraction of street segments classified as cul-de-sac suffix types (Court, Place, Circle, Cove, etc.). The block group’s median construction year from ACS housing stock data places it in historical time.\nThe spatial weight matrix uses k=8 nearest neighbors (Haversine distance on block group centroids). The neighbor lag is the simple average of the k neighbors’ cul-de-sac share."
+  },
+  {
+    "objectID": "spatial.html#estimating-equation",
+    "href": "spatial.html#estimating-equation",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Estimating equation",
+    "text": "Estimating equation\nFor each construction year Y, restricting to block groups with median construction year within ±3 years of Y:\n\\[\\text{culdesac\\_share}_i = \\alpha + \\beta \\cdot \\text{neighbor\\_lag}_i + \\sum_s \\gamma_s \\cdot \\mathbf{1}[\\text{state}_i = s] + \\varepsilon_i\\]\nState fixed effects absorb broad regional norms (Sun Belt vs. Northeast, state zoning culture). HC3 heteroskedasticity-robust standard errors throughout."
+  },
+  {
+    "objectID": "spatial.html#year-by-year-results",
+    "href": "spatial.html#year-by-year-results",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Year-by-year results",
+    "text": "Year-by-year results\n\n\nYears with reliable estimates: 74  (1941–2015)\nβ range: 0.601 – 0.902\nMedian n per year: 20,814\n\n\n\nThe arc is striking. Mimetic spillover is already substantial in the postwar boom (β≈0.64 in 1950) — developers copying nearby subdivisions is not new. But it intensifies sharply through the 1960s and 1970s as the cul-de-sac becomes the dominant organizational logic of residential development, peaking around β≈0.90 in the early 1980s. This is the era of the planning monoculture: zoning codes in most jurisdictions were explicitly prescribing cul-de-sac layouts, and the copying was not just imitation but regulatory mandate.\nThe decline after 2000 is equally informative. New Urbanism, walkability research, and backlash against suburban isolation began reshaping planning codes from the late 1990s onward. The β falls to ≈0.67 by 2010 — still high, but meaningfully lower than the peak. The spatial monoculture is loosening."
+  },
+  {
+    "objectID": "spatial.html#morans-i-clustering-by-era",
+    "href": "spatial.html#morans-i-clustering-by-era",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Moran’s I: clustering by era",
+    "text": "Moran’s I: clustering by era\n\n\n\n\n\n\n\n\n\nEra\nMedian Moran's I\n% States Significant (p&lt;0.05)\nN States\n\n\n\n\n0\n1920s-40s\n0.136\n81.2%\n48\n\n\n1\npostwar boom\n0.147\n87.0%\n46\n\n\n2\n1965-1979\n0.295\n93.9%\n49\n\n\n3\n1980-1999\n0.392\n98.0%\n49\n\n\n4\n2000+\n0.304\n95.9%\n49\n\n\n\n\n\n\n\n\nMoran’s I — a global measure of spatial autocorrelation in cul-de-sac share across all block groups within a state — tells a complementary story. Geographic clustering of cul-de-sac density is weak in the 1920s–40s (I≈0.14), intensifies through the postwar and 1965–1979 eras, peaks in 1980–1999 (I≈0.39), and remains elevated but declining in 2000+. By the 2000s, essentially every state shows statistically significant clustering (&gt;95% of states, p&lt;0.05)."
+  },
+  {
+    "objectID": "spatial.html#era-to-era-propagation",
+    "href": "spatial.html#era-to-era-propagation",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Era-to-era propagation",
+    "text": "Era-to-era propagation\n\nThe bucketed era analysis asks a slightly different question: how much does a block group’s cul-de-sac density depend on the cul-de-sac density of its earlier-built neighbors? This captures cross-era transmission — whether the suburb built in 1975 reflects the pattern set by the 1955 suburb next door.\nThe β remains high (≈0.86–0.88) for postwar → 1965–1979 and 1965–1979 → 1980–1999 transitions, then drops to ≈0.69 for the 1980–1999 → 2000+ transition. Again: the copying mechanism persists but weakens as design alternatives gain legitimacy."
+  },
+  {
+    "objectID": "spatial.html#interpretation",
+    "href": "spatial.html#interpretation",
+    "title": "Spatial Mimesis in Street Design",
+    "section": "Interpretation",
+    "text": "Interpretation\nThree findings converge on the same story:\n\nCul-de-sac adoption was highly mimetic. Neighborhood-copying accounts for 60–90% of the variance in local dead-end street density after state fixed effects.\nThe mimesis intensified through the 1960s–1980s as the cul-de-sac became a regulatory default, then weakened as New Urbanism offered an alternative design vocabulary.\nThe mechanism is spatial, not just temporal. It is not that all neighborhoods in a given decade adopted cul-de-sacs; it is that neighborhoods copied neighboring neighborhoods specifically. The spatial lag β, not just the era mean, is the signal.\n\nThis connects the street suffix analysis to a broader point about the role of imitation in built-environment production. The suffix divergence documented in the main analysis — cul-de-sac streets named “Court,” “Place,” and “Circle” becoming interchangeable — is the vocabulary signature of a planning monoculture that the spatial analysis reveals quantitatively."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "What’s in a Street Name?",
+    "section": "",
+    "text": "Street suffixes — Road, Court, Boulevard, Lane — once carried typological meaning. A Court was a short cul-de-sac. A Boulevard was a wide, tree-lined arterial with pedestrian amenity. A Road was a rural through-route.\nThe hypothesis here: the post-war suburban development era decoupled suffix from form, repurposing evocative names as marketing vocabulary. This analysis tests that empirically across four states (Ohio, Kentucky, Rhode Island, Connecticut) using OpenStreetMap road geometry and Census building-era data."
+  },
+  {
+    "objectID": "index.html#key-findings",
+    "href": "index.html#key-findings",
+    "title": "What’s in a Street Name?",
+    "section": "Key Findings",
+    "text": "Key Findings\nMost street suffixes have collapsed to a single built form. Court, Drive, Lane, Place, Circle, Way, and Street are statistically indistinguishable on intersection density and segment length. The suffix carries no predictive information about what the street looks like.\nThe collapse is concentrated in the postwar and 1965–1999 development eras. Spread across suffixes narrows sharply through the postwar boom, reaching its minimum in 1980–1999 neighborhoods — the empirical signature of suburban marketing vocabulary overwriting functional typology.\nA small set of suffixes retain typological identity: Road (long segments, low connectivity), Trail (long, low), and Alley (short, dense) remain meaningfully differentiated because their identity is functional rather than evocative.\nBoulevard shows the most dramatic drift: high connectivity in pre-war neighborhoods (often genuinely wide arterials), dropping to generic suburban collector in the postwar era, partially recovering in 2000+ contexts."
+  },
+  {
+    "objectID": "index.html#data-and-methods",
+    "href": "index.html#data-and-methods",
+    "title": "What’s in a Street Name?",
+    "section": "Data and Methods",
+    "text": "Data and Methods\nStreet segments are drawn from OpenStreetMap for four states — Ohio, Kentucky, Rhode Island, and Connecticut — spanning the Midwest and Northeast. Each segment is spatially joined to its surrounding Census block group’s modal development era from ACS 2022 data: the decade when the most housing in that block group was built.\nPrimary built-form measures are geometric, derived directly from OSM node structure:\n\nIntersection density (intersections per km): high = connected urban grid; low = dead-end or rural through-road\nSegment length (meters): short segments = fine-grained grid; long segments = arterial or subdivision collector\n\nSpeed limits and lane counts are included as supplementary context where OSM contributors have tagged them, but coverage is sparse on residential streets.\n\nAnalysis →"
+  },
+  {
     "objectID": "analysis.html",
     "href": "analysis.html",
     "title": "Analysis",
@@ -68,82 +145,5 @@
     "title": "Analysis",
     "section": "Caveats",
     "text": "Caveats\n\nGeographic scope: All 50 states, ~50M street ways. OSM coverage is denser in urban areas and the Northeast; rural and Western states may be underrepresented in residential street data.\nSpeed/lanes: OSM tag coverage is too sparse for reliable national analysis. No consistent local-road dataset exists nationally.\nEra assignment: Based on modal decade of housing construction in the Census block group — a neighborhood-level proxy, not parcel-level build date. Streets in mixed-vintage neighborhoods may be misclassified.\nOSM intersection density: Counts any shared node between highway ways, including driveways and minor service connections. Filtering to named intersections only would give cleaner numbers."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "What’s in a Street Name?",
-    "section": "",
-    "text": "Street suffixes — Road, Court, Boulevard, Lane — once carried typological meaning. A Court was a short cul-de-sac. A Boulevard was a wide, tree-lined arterial with pedestrian amenity. A Road was a rural through-route.\nThe hypothesis here: the post-war suburban development era decoupled suffix from form, repurposing evocative names as marketing vocabulary. This analysis tests that empirically across four states (Ohio, Kentucky, Rhode Island, Connecticut) using OpenStreetMap road geometry and Census building-era data."
-  },
-  {
-    "objectID": "index.html#key-findings",
-    "href": "index.html#key-findings",
-    "title": "What’s in a Street Name?",
-    "section": "Key Findings",
-    "text": "Key Findings\nMost street suffixes have collapsed to a single built form. Court, Drive, Lane, Place, Circle, Way, and Street are statistically indistinguishable on intersection density and segment length. The suffix carries no predictive information about what the street looks like.\nThe collapse is concentrated in the postwar and 1965–1999 development eras. Spread across suffixes narrows sharply through the postwar boom, reaching its minimum in 1980–1999 neighborhoods — the empirical signature of suburban marketing vocabulary overwriting functional typology.\nA small set of suffixes retain typological identity: Road (long segments, low connectivity), Trail (long, low), and Alley (short, dense) remain meaningfully differentiated because their identity is functional rather than evocative.\nBoulevard shows the most dramatic drift: high connectivity in pre-war neighborhoods (often genuinely wide arterials), dropping to generic suburban collector in the postwar era, partially recovering in 2000+ contexts."
-  },
-  {
-    "objectID": "index.html#data-and-methods",
-    "href": "index.html#data-and-methods",
-    "title": "What’s in a Street Name?",
-    "section": "Data and Methods",
-    "text": "Data and Methods\nStreet segments are drawn from OpenStreetMap for four states — Ohio, Kentucky, Rhode Island, and Connecticut — spanning the Midwest and Northeast. Each segment is spatially joined to its surrounding Census block group’s modal development era from ACS 2022 data: the decade when the most housing in that block group was built.\nPrimary built-form measures are geometric, derived directly from OSM node structure:\n\nIntersection density (intersections per km): high = connected urban grid; low = dead-end or rural through-road\nSegment length (meters): short segments = fine-grained grid; long segments = arterial or subdivision collector\n\nSpeed limits and lane counts are included as supplementary context where OSM contributors have tagged them, but coverage is sparse on residential streets.\n\nAnalysis →"
-  },
-  {
-    "objectID": "spatial.html",
-    "href": "spatial.html",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "",
-    "text": "Suburban street networks are not designed in isolation. Developers and planners look at neighboring subdivisions when deciding how to lay out new streets. If this neighborhood-copying dynamic is real, we should see a measurable spatial lag — a block group’s share of dead-end streets should be strongly predicted by its neighbors’ share, above and beyond shared state-level norms or national trends.\nAnd the strength of that copying should vary over time. The cul-de-sac as design ideology spread rapidly through the 1960s and 1970s, became a regulatory default by the 1980s, and has faced mounting criticism from New Urbanism and walkability advocates since the 2000s. If mimetic copying was the mechanism, the spatial lag β should rise and fall accordingly."
-  },
-  {
-    "objectID": "spatial.html#the-question",
-    "href": "spatial.html#the-question",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "",
-    "text": "Suburban street networks are not designed in isolation. Developers and planners look at neighboring subdivisions when deciding how to lay out new streets. If this neighborhood-copying dynamic is real, we should see a measurable spatial lag — a block group’s share of dead-end streets should be strongly predicted by its neighbors’ share, above and beyond shared state-level norms or national trends.\nAnd the strength of that copying should vary over time. The cul-de-sac as design ideology spread rapidly through the 1960s and 1970s, became a regulatory default by the 1980s, and has faced mounting criticism from New Urbanism and walkability advocates since the 2000s. If mimetic copying was the mechanism, the spatial lag β should rise and fall accordingly."
-  },
-  {
-    "objectID": "spatial.html#data",
-    "href": "spatial.html#data",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Data",
-    "text": "Data\nBlock groups are drawn from ACS 2022 data across 48 states (~207,000 block groups). Each block group’s cul-de-sac share is computed from OpenStreetMap: the fraction of street segments classified as cul-de-sac suffix types (Court, Place, Circle, Cove, etc.). The block group’s median construction year from ACS housing stock data places it in historical time.\nThe spatial weight matrix uses k=8 nearest neighbors (Haversine distance on block group centroids). The neighbor lag is the simple average of the k neighbors’ cul-de-sac share."
-  },
-  {
-    "objectID": "spatial.html#estimating-equation",
-    "href": "spatial.html#estimating-equation",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Estimating equation",
-    "text": "Estimating equation\nFor each construction year Y, restricting to block groups with median construction year within ±3 years of Y:\n\\[\\text{culdesac\\_share}_i = \\alpha + \\beta \\cdot \\text{neighbor\\_lag}_i + \\sum_s \\gamma_s \\cdot \\mathbf{1}[\\text{state}_i = s] + \\varepsilon_i\\]\nState fixed effects absorb broad regional norms (Sun Belt vs. Northeast, state zoning culture). HC3 heteroskedasticity-robust standard errors throughout."
-  },
-  {
-    "objectID": "spatial.html#year-by-year-results",
-    "href": "spatial.html#year-by-year-results",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Year-by-year results",
-    "text": "Year-by-year results\n\n\nYears with reliable estimates: 74  (1941–2015)\nβ range: 0.601 – 0.902\nMedian n per year: 20,814\n\n\n\nThe arc is striking. Mimetic spillover is already substantial in the postwar boom (β≈0.64 in 1950) — developers copying nearby subdivisions is not new. But it intensifies sharply through the 1960s and 1970s as the cul-de-sac becomes the dominant organizational logic of residential development, peaking around β≈0.90 in the early 1980s. This is the era of the planning monoculture: zoning codes in most jurisdictions were explicitly prescribing cul-de-sac layouts, and the copying was not just imitation but regulatory mandate.\nThe decline after 2000 is equally informative. New Urbanism, walkability research, and backlash against suburban isolation began reshaping planning codes from the late 1990s onward. The β falls to ≈0.67 by 2010 — still high, but meaningfully lower than the peak. The spatial monoculture is loosening."
-  },
-  {
-    "objectID": "spatial.html#morans-i-clustering-by-era",
-    "href": "spatial.html#morans-i-clustering-by-era",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Moran’s I: clustering by era",
-    "text": "Moran’s I: clustering by era\n\n\n\n\n\n\n\n\n\nEra\nMedian Moran's I\n% States Significant (p&lt;0.05)\nN States\n\n\n\n\n0\n1920s-40s\n0.136\n81.2%\n48\n\n\n1\npostwar boom\n0.147\n87.0%\n46\n\n\n2\n1965-1979\n0.295\n93.9%\n49\n\n\n3\n1980-1999\n0.392\n98.0%\n49\n\n\n4\n2000+\n0.304\n95.9%\n49\n\n\n\n\n\n\n\n\nMoran’s I — a global measure of spatial autocorrelation in cul-de-sac share across all block groups within a state — tells a complementary story. Geographic clustering of cul-de-sac density is weak in the 1920s–40s (I≈0.14), intensifies through the postwar and 1965–1979 eras, peaks in 1980–1999 (I≈0.39), and remains elevated but declining in 2000+. By the 2000s, essentially every state shows statistically significant clustering (&gt;95% of states, p&lt;0.05)."
-  },
-  {
-    "objectID": "spatial.html#era-to-era-propagation",
-    "href": "spatial.html#era-to-era-propagation",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Era-to-era propagation",
-    "text": "Era-to-era propagation\n\nThe bucketed era analysis asks a slightly different question: how much does a block group’s cul-de-sac density depend on the cul-de-sac density of its earlier-built neighbors? This captures cross-era transmission — whether the suburb built in 1975 reflects the pattern set by the 1955 suburb next door.\nThe β remains high (≈0.86–0.88) for postwar → 1965–1979 and 1965–1979 → 1980–1999 transitions, then drops to ≈0.69 for the 1980–1999 → 2000+ transition. Again: the copying mechanism persists but weakens as design alternatives gain legitimacy."
-  },
-  {
-    "objectID": "spatial.html#interpretation",
-    "href": "spatial.html#interpretation",
-    "title": "Spatial Mimesis in Street Design",
-    "section": "Interpretation",
-    "text": "Interpretation\nThree findings converge on the same story:\n\nCul-de-sac adoption was highly mimetic. Neighborhood-copying accounts for 60–90% of the variance in local dead-end street density after state fixed effects.\nThe mimesis intensified through the 1960s–1980s as the cul-de-sac became a regulatory default, then weakened as New Urbanism offered an alternative design vocabulary.\nThe mechanism is spatial, not just temporal. It is not that all neighborhoods in a given decade adopted cul-de-sacs; it is that neighborhoods copied neighboring neighborhoods specifically. The spatial lag β, not just the era mean, is the signal.\n\nThis connects the street suffix analysis to a broader point about the role of imitation in built-environment production. The suffix divergence documented in the main analysis — cul-de-sac streets named “Court,” “Place,” and “Circle” becoming interchangeable — is the vocabulary signature of a planning monoculture that the spatial analysis reveals quantitatively."
   }
 ]

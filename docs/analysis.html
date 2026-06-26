@@ -132,6 +132,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./analysis.html" aria-current="page"> 
 <span class="menu-text">Analysis</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./spatial.html"> 
+<span class="menu-text">Spatial Mimesis</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -183,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="26987c1e" class="cell" data-execution_count="1">
+<div id="743d252e" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -245,7 +249,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </section>
 <section id="the-collapse-suffixes-converging-on-a-single-form" class="level2">
 <h2 class="anchored" data-anchor-id="the-collapse-suffixes-converging-on-a-single-form">The collapse: suffixes converging on a single form</h2>
-<div id="6cd82ede" class="cell" data-execution_count="2">
+<div id="50c3c913" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show that most suffixes are now indistinguishable on core attributes</span></span>
@@ -276,7 +280,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-3-output-1.png" width="1143" height="489" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-3-output-1.png" width="1142" height="489" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -287,7 +291,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="connectivity-across-development-eras" class="level2">
 <h2 class="anchored" data-anchor-id="connectivity-across-development-eras">Connectivity across development eras</h2>
 <p>The most informative dimension is what happens when you break the same suffix down by the era of surrounding development.</p>
-<div id="1638501b" class="cell" data-execution_count="3">
+<div id="ccc7e7b3" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> pd.read_csv(DATA_PROC <span class="op">/</span> <span class="st">"era_profiles.csv"</span>)</span>
@@ -326,12 +330,12 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-4-output-1.png" width="982" height="960" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-4-output-1.png" width="977" height="958" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="112fa604" class="cell" data-execution_count="4">
+<div id="f3fcfffd" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Segment length heatmap</span></span>
@@ -363,7 +367,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-5-output-1.png" width="990" height="960" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-5-output-1.png" width="986" height="958" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -373,7 +377,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="the-convergence-story" class="level2">
 <h2 class="anchored" data-anchor-id="the-convergence-story">The convergence story</h2>
 <p>If suffix names once carried meaningful information about built form, we’d expect <strong>high variance across suffixes</strong> in older eras (each suffix means something different) and <strong>lower variance in newer eras</strong> (they’ve all collapsed toward a common form). The coefficient of variation across suffixes — lower = more similar to each other — tests this directly.</p>
-<div id="27d1296d" class="cell" data-execution_count="5">
+<div id="5acef941" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>conv_rows <span class="op">=</span> []</span>
@@ -421,7 +425,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-6-output-1.png" width="1047" height="396" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-6-output-1.png" width="1046" height="395" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -431,7 +435,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 </section>
 <section id="selected-suffix-trajectories" class="level2">
 <h2 class="anchored" data-anchor-id="selected-suffix-trajectories">Selected suffix trajectories</h2>
-<div id="bd633fa9" class="cell" data-execution_count="6">
+<div id="e17254db" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on the suffixes with interesting era trajectories</span></span>
@@ -465,7 +469,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-7-output-1.png" width="1237" height="489" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-7-output-1.png" width="1238" height="489" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -475,7 +479,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <section id="speed-and-lane-counts-supplementary" class="level2">
 <h2 class="anchored" data-anchor-id="speed-and-lane-counts-supplementary">Speed and lane counts (supplementary)</h2>
 <p>Speed limits and lane counts are included where OSM contributors have tagged them, but coverage is sparse — particularly on residential streets, which is precisely where the suffix-meaning question is most interesting. No consistent national source exists for local road attributes. These figures should be read as directional rather than comprehensive.</p>
-<div id="3d2abe12" class="cell" data-execution_count="7">
+<div id="e9ccfc90" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
@@ -508,7 +512,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-8-output-1.png" width="1143" height="469" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-8-output-1.png" width="1142" height="469" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -519,7 +523,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <h2 class="anchored" data-anchor-id="whats-in-the-name-itself">What’s in the name itself?</h2>
 <p>The suffix analysis above measures form. This section asks a different question: do the <em>names</em> themselves — stripped of their suffix — encode local meaning, or have they become as generic as the streets they label?</p>
 <p>Three lenses on placelessness, computed across all 12.8 million named ways nationally:</p>
-<div id="53268280" class="cell" data-execution_count="8">
+<div id="7831bd92" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
@@ -587,7 +591,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="analysis_files/figure-html/cell-9-output-1.png" width="1239" height="445" class="figure-img"></p>
+<p><img src="analysis_files/figure-html/cell-9-output-1.png" width="1238" height="445" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -595,7 +599,7 @@ Eras:   {'pre-1920': 0, '1920s-40s': 1800331, 'postwar boom': 1025493, '1965-197
 <p><strong>Geographic diffusion</strong> (left) measures how many states each base name appears in nationally — a proxy for genericness. The median drops from <strong>25 states</strong> in 1920s-40s neighborhoods to <strong>10 states</strong> in 2000+ neighborhoods. This sounds like new streets are more locally unique, but the top-name tables tell the real story: 1920s-40s streets are named after people (Washington, Lincoln) and the grid (2nd, 3rd, 4th) — genuinely national in the sense of shared civic vocabulary. Post-1980 streets have low diffusion because developer-coined compound names (“Whispering Pines,” “Sugar Creek”) are unique by construction, not because they reference anything local.</p>
 <p><strong>Marketing vocabulary</strong> (center) — words like <em>Estates, Manor, Pointe, Reserve, Ridge, Glen, Springs</em> — rises from <strong>7.4% to 11.5%</strong> of street names across eras. The 1965-1979 generation is the inflection point, the first suburban wave to fully adopt pastoral branding as a development strategy.</p>
 <p><strong>Name length</strong> (right) is the subtlest signal but directionally consistent: base names grow from 1.64 to 1.74 words on average. Pre-war streets are mostly monosyllabic (Elm, Main, Oak). Suburban streets pile on modifiers (Shady Valley, Pleasant Ridge, Sugar Creek) to evoke a landscape that development has often replaced.</p>
-<div id="345aaf76" class="cell" data-execution_count="9">
+<div id="590c5d37" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top names per era — show the vocabulary shift</span></span>
